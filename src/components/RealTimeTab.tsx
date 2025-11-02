@@ -31,44 +31,44 @@ export function RealTimeTab() {
   const getStateConfig = (state: DriverState) => {
     switch (state) {
       case 'normal':
-        return { 
-          label: 'Normal', 
+        return {
+          label: 'Normal',
           color: 'from-emerald-400 to-green-500',
           bgColor: 'bg-emerald-500/5',
           borderColor: 'border-emerald-500/20',
           textColor: 'text-emerald-400',
           glowColor: 'shadow-emerald-500/10',
-          icon: CheckCircle 
+          icon: CheckCircle
         };
       case 'microsleep':
-        return { 
-          label: 'Microsleep', 
+        return {
+          label: 'Microsueño',
           color: 'from-rose-400 to-red-500',
           bgColor: 'bg-rose-500/5',
           borderColor: 'border-rose-500/20',
           textColor: 'text-rose-400',
           glowColor: 'shadow-rose-500/10',
-          icon: AlertTriangle 
+          icon: AlertTriangle
         };
       case 'fatigue':
-        return { 
-          label: 'Fatigue', 
+        return {
+          label: 'Fatiga',
           color: 'from-amber-400 to-orange-500',
           bgColor: 'bg-amber-500/5',
           borderColor: 'border-amber-500/20',
           textColor: 'text-amber-400',
           glowColor: 'shadow-amber-500/10',
-          icon: Coffee 
+          icon: Coffee
         };
       case 'drowsiness':
-        return { 
-          label: 'Drowsiness', 
+        return {
+          label: 'Somnolencia',
           color: 'from-sky-400 to-blue-500',
           bgColor: 'bg-sky-400/5',
           borderColor: 'border-sky-400/20',
           textColor: 'text-sky-400',
           glowColor: 'shadow-sky-500/10',
-          icon: Moon 
+          icon: Moon
         };
     }
   };
@@ -149,7 +149,7 @@ export function RealTimeTab() {
           <div className="flex flex-col sm:flex-row items-start sm:items-center gap-3 sm:gap-4 min-w-0">
             <div className="flex items-center gap-2 shrink-0">
               <div className={`w-2 h-2 rounded-full ${isConnected ? 'bg-blue-400' : 'bg-rose-400'} animate-pulse`} />
-              <span className="text-xs sm:text-sm text-white/60 whitespace-nowrap">Status</span>
+              <span className="text-xs sm:text-sm text-white/60 whitespace-nowrap">Estado</span>
             </div>
             <div className={`flex items-center gap-2 px-3 sm:px-4 py-2 rounded-lg border ${
               isConnected
@@ -159,12 +159,12 @@ export function RealTimeTab() {
               {isConnected ? (
                 <>
                   <Wifi className="w-4 h-4 shrink-0" />
-                  <span className="text-xs sm:text-sm whitespace-nowrap">Connected</span>
+                  <span className="text-xs sm:text-sm whitespace-nowrap">Conectado</span>
                 </>
               ) : (
                 <>
                   <WifiOff className="w-4 h-4 shrink-0" />
-                  <span className="text-xs sm:text-sm whitespace-nowrap">Disconnected</span>
+                  <span className="text-xs sm:text-sm whitespace-nowrap">Desconectado</span>
                 </>
               )}
             </div>
@@ -186,12 +186,12 @@ export function RealTimeTab() {
             {isMonitoring ? (
               <>
                 <Square className="mr-2 h-4 w-4 sm:h-5 sm:w-5 fill-current shrink-0" />
-                <span className="truncate">Stop Monitoring</span>
+                <span className="truncate">Detener Monitoreo</span>
               </>
             ) : (
               <>
                 <Play className="mr-2 h-4 w-4 sm:h-5 sm:w-5 fill-current shrink-0" />
-                <span className="truncate">Start Monitoring</span>
+                <span className="truncate">Iniciar Monitoreo</span>
               </>
             )}
           </Button>
@@ -215,7 +215,7 @@ export function RealTimeTab() {
             >
               <div className="relative z-10">
                 <div className="flex items-center justify-between mb-2 sm:mb-3">
-                  <span className="text-[10px] sm:text-xs uppercase tracking-wider text-white/40">Driver State</span>
+                  <span className="text-[10px] sm:text-xs uppercase tracking-wider text-white/40">Estado del Conductor</span>
                   <div className={`p-1.5 sm:p-2 rounded-lg ${stateConfig.bgColor} ${stateConfig.borderColor} border`}>
                     <StateIcon className={`h-4 w-4 sm:h-5 sm:w-5 ${stateConfig.textColor}`} />
                   </div>
@@ -235,18 +235,18 @@ export function RealTimeTab() {
 
             {/* Blinks */}
             <MetricCard
-              title="Blinks"
+              title="Parpadeos"
               value={metrics.blinks.toString()}
               color="blue"
-              subtitle="per minute"
+              subtitle="por minuto"
             />
 
             {/* Yawns */}
             <MetricCard
-              title="Yawns"
+              title="Bostezos"
               value={metrics.yawns.toString()}
               color="indigo"
-              subtitle="per minute"
+              subtitle="por minuto"
             />
           </motion.div>
 
@@ -273,7 +273,7 @@ export function RealTimeTab() {
           <div className="inline-flex items-center justify-center w-16 h-16 sm:w-20 sm:h-20 rounded-2xl bg-white/2 border border-white/10 mb-4 sm:mb-6 shadow-lg">
             <Play className="h-7 w-7 sm:h-9 sm:w-9 text-white/20" />
           </div>
-          <p className="text-white/40 text-sm sm:text-base md:text-lg px-4">Click "Start Monitoring" to begin tracking driver metrics</p>
+          <p className="text-white/40 text-sm sm:text-base md:text-lg px-4">Haz clic en "Iniciar Monitoreo" para comenzar a rastrear las métricas del conductor</p>
         </motion.div>
       )}
     </div>

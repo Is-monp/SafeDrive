@@ -8,8 +8,8 @@ export function BlinksYawnsChart({ data }: BlinksYawnsChartProps) {
   return (
     <div className="relative overflow-hidden rounded-xl border border-white/10 bg-white/2 backdrop-blur-sm p-6 shadow-xl">
       <div className="mb-6">
-        <h3 className="text-lg text-white/90">Blinks & Yawns Over Time</h3>
-        <p className="text-xs text-white/40 mt-1">Per minute measurements</p>
+        <h3 className="text-lg text-white/90">Parpadeos y Bostezos en el Tiempo</h3>
+        <p className="text-xs text-white/40 mt-1">Mediciones por minuto</p>
       </div>
       
       <ResponsiveContainer width="100%" height={300}>
@@ -42,23 +42,23 @@ export function BlinksYawnsChart({ data }: BlinksYawnsChartProps) {
             wrapperStyle={{ color: '#ffffff60', fontSize: '12px' }}
             iconType="circle"
           />
-          <Line 
-            type="monotone" 
-            dataKey="blinks" 
-            stroke="#60a5fa" 
+          <Line
+            type="monotone"
+            dataKey="blinks"
+            stroke="#60a5fa"
             strokeWidth={2.5}
             dot={false}
             activeDot={{ r: 5, fill: '#60a5fa', strokeWidth: 0 }}
-            name="Blinks"
+            name="Parpadeos"
           />
-          <Line 
-            type="monotone" 
-            dataKey="yawns" 
-            stroke="#c084fc" 
+          <Line
+            type="monotone"
+            dataKey="yawns"
+            stroke="#c084fc"
             strokeWidth={2.5}
             dot={false}
             activeDot={{ r: 5, fill: '#c084fc', strokeWidth: 0 }}
-            name="Yawns"
+            name="Bostezos"
           />
         </LineChart>
       </ResponsiveContainer>

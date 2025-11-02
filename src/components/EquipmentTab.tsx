@@ -14,16 +14,16 @@ export function EquipmentTab() {
   const teamMembers: TeamMember[] = [
     {
       name: 'Jane Doe',
-      role: 'Full-Stack Developer',
-      description: 'Specialized in backend development and AWS integration. Responsible for data architecture and real-time monitoring connections with RDS and EC2.',
+      role: 'Desarrolladora Full-Stack',
+      description: 'Especializada en desarrollo backend e integración con AWS. Responsable de la arquitectura de datos y conexiones de monitoreo en tiempo real con RDS y EC2.',
       email: 'jane.doe@safedrive.com',
       location: 'San Francisco, CA',
       image: 'https://images.unsplash.com/photo-1581065178047-8ee15951ede6?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxwcm9mZXNzaW9uYWwlMjBwb3J0cmFpdCUyMHdvbWFufGVufDF8fHx8MTc2MTk5MjExNHww&ixlib=rb-4.1.0&q=80&w=1080',
     },
     {
       name: 'John Doe',
-      role: 'Frontend Developer',
-      description: 'Focused on user experience and data visualization. Responsible for interface design, interactive graphics, and presentation of fatigue and drowsiness metrics.',
+      role: 'Desarrollador Frontend',
+      description: 'Enfocado en la experiencia de usuario y visualización de datos. Responsable del diseño de interfaz, gráficos interactivos y presentación de métricas de fatiga y somnolencia.',
       email: 'john.doe@safedrive.com',
       location: 'New York, NY',
       image: 'https://images.unsplash.com/photo-1672685667592-0392f458f46f?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxwcm9mZXNzaW9uYWwlMjBwb3J0cmFpdCUyMG1hbnxlbnwxfHx8fDE3NjIwMDIzMjV8MA&ixlib=rb-4.1.0&q=80&w=1080',
@@ -39,9 +39,9 @@ export function EquipmentTab() {
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.4 }}
       >
-        <h2 className="text-2xl sm:text-3xl text-white/90 mb-2 sm:mb-3">Meet Our Team</h2>
+        <h2 className="text-2xl sm:text-3xl text-white/90 mb-2 sm:mb-3">Conoce Nuestro Equipo</h2>
         <p className="text-sm sm:text-base text-white/50">
-          Developers committed to road safety
+          Desarrolladores comprometidos con la seguridad vial
         </p>
       </motion.div>
 
@@ -107,8 +107,8 @@ export function EquipmentTab() {
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5, delay: 0.3 }}
       >
-        <h3 className="text-lg sm:text-xl text-white/90 mb-4 sm:mb-6">System Overview</h3>
-        
+        <h3 className="text-lg sm:text-xl text-white/90 mb-4 sm:mb-6">Descripción del Sistema</h3>
+
         <div className="space-y-4 sm:space-y-5 text-white/60 leading-relaxed">
           <motion.div
             className="flex items-start gap-3 sm:gap-4 group"
@@ -118,8 +118,8 @@ export function EquipmentTab() {
           >
             <div className="w-1.5 h-1.5 rounded-full bg-blue-400 mt-1.5 sm:mt-2.5 shrink-0 group-hover:scale-150 transition-transform" />
             <p className="text-xs sm:text-sm">
-              <span className="text-blue-400">SafeDrive Monitoring System</span> utilizes advanced computer vision
-              and machine learning algorithms to detect driver fatigue and drowsiness in real-time.
+              <span className="text-blue-400">Sistema de Monitoreo SafeDrive</span> utiliza visión artificial avanzada
+              y algoritmos de aprendizaje automático para detectar fatiga y somnolencia del conductor en tiempo real.
             </p>
           </motion.div>
 
@@ -131,8 +131,8 @@ export function EquipmentTab() {
           >
             <div className="w-1.5 h-1.5 rounded-full bg-indigo-400 mt-1.5 sm:mt-2.5 shrink-0 group-hover:scale-150 transition-transform" />
             <p className="text-xs sm:text-sm">
-              The system analyzes facial landmarks, eye closure patterns (PERCLOS), blink frequency,
-              and yawn detection to determine the driver's alertness state.
+              El sistema analiza puntos de referencia faciales, patrones de cierre de ojos (PERCLOS), frecuencia de parpadeo
+              y detección de bostezos para determinar el estado de alerta del conductor.
             </p>
           </motion.div>
 
@@ -144,8 +144,8 @@ export function EquipmentTab() {
           >
             <div className="w-1.5 h-1.5 rounded-full bg-blue-400 mt-1.5 sm:mt-2.5 shrink-0 group-hover:scale-150 transition-transform" />
             <p className="text-xs sm:text-sm">
-              Real-time alerts are generated when dangerous fatigue levels are detected, helping prevent
-              accidents caused by driver drowsiness.
+              Las alertas en tiempo real se generan cuando se detectan niveles peligrosos de fatiga, ayudando a prevenir
+              accidentes causados por somnolencia del conductor.
             </p>
           </motion.div>
         </div>
