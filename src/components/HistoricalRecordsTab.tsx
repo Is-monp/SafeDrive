@@ -4,6 +4,8 @@ import { Button } from '@radix-ui/themes';
 import { Input } from './ui/input';
 import { Label } from './ui/label';
 import { Calendar, Activity, Search } from 'lucide-react';
+import { PERCLOSChart } from './PERCLOSChart';
+import { BlinksYawnsChart } from './BlinksYawnsChart';
 
 interface HistoricalData {
   avgPerclos: number;
@@ -25,14 +27,18 @@ export function HistoricalRecordsTab() {
   // Mock data
   const [historicalData] = useState<HistoricalData>({
     avgPerclos: 32.5,
-    avgBlinks: 18.3,
-    avgYawns: 2.1,
+    avgBlinks: 18,
+    avgYawns: 2,
     totalSessions: 47,
     normalTime: 68.2,
     fatigueTime: 18.5,
     drowsinessTime: 10.1,
     microsleepTime: 3.2,
   });
+
+  // Historical chart data
+  const [perclosHistory, setPerclosHistory] = useState<{ time: string; value: number }[]>([]);
+  const [blinksYawnsHistory, setBlinksYawnsHistory] = useState<{ time: string; blinks: number; yawns: number }[]>([]);
 
   // Función para convertir el formato datetime-local a ISO 8601 con zona horaria
   const convertToISO = (datetimeLocal: string): string => {
@@ -69,6 +75,45 @@ export function HistoricalRecordsTab() {
 
     console.log('Fecha inicio (ISO):', startDateISO);
     console.log('Fecha fin (ISO):', endDateISO);
+
+    // Generate mock historical data based on date range
+    const start = new Date(startDate);
+    const end = new Date(endDate);
+    const dataPoints: { time: string; value: number }[] = [];
+    const blinksYawnsPoints: { time: string; blinks: number; yawns: number }[] = [];
+
+    // Calculate number of data points based on time range (up to 50 points)
+    const timeDiff = end.getTime() - start.getTime();
+    const numPoints = Math.min(50, Math.max(10, Math.floor(timeDiff / (1000 * 60 * 60)))); // One point per hour, max 50
+
+    for (let i = 0; i < numPoints; i++) {
+      const timestamp = new Date(start.getTime() + (timeDiff * i) / (numPoints - 1));
+      const timeStr = timestamp.toLocaleString('es-ES', {
+        month: 'short',
+        day: 'numeric',
+        hour: '2-digit',
+        minute: '2-digit'
+      });
+
+      // Generate realistic mock data with some variation
+      const perclosValue = 20 + Math.random() * 40 + Math.sin(i / 3) * 15;
+      const blinksValue = Math.floor(15 + Math.random() * 20 + Math.cos(i / 4) * 5);
+      const yawnsValue = Math.floor(1 + Math.random() * 6 + Math.sin(i / 5) * 2);
+
+      dataPoints.push({
+        time: timeStr,
+        value: Math.max(0, Math.min(100, perclosValue))
+      });
+
+      blinksYawnsPoints.push({
+        time: timeStr,
+        blinks: Math.max(0, blinksValue),
+        yawns: Math.max(0, yawnsValue)
+      });
+    }
+
+    setPerclosHistory(dataPoints);
+    setBlinksYawnsHistory(blinksYawnsPoints);
 
     // Aquí usarías startDateISO y endDateISO para la petición al backend
     setShowData(true);
@@ -169,7 +214,7 @@ export function HistoricalRecordsTab() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.1 }}
           >
-            <div className="relative overflow-hidden rounded-xl border border-sky-400/20 bg-sky-400/5 backdrop-blur-sm p-4 sm:p-5 md:p-6 shadow-lg shadow-sky-400/10">
+            <div className="relative overflow-hidden rounded-xl  bg-sky-400/5 backdrop-blur-sm p-4 sm:p-5 md:p-6 shadow-lg shadow-sky-400/10">
               <div className="relative z-10">
                 <div className="text-[10px] sm:text-xs uppercase tracking-wider text-white/40 mb-2 sm:mb-3">Registros encontrados</div>
                 <div className="text-2xl sm:text-3xl tabular-nums text-white/90">{historicalData.totalSessions}</div>
@@ -177,7 +222,7 @@ export function HistoricalRecordsTab() {
               <div className="absolute -bottom-4 -right-4 w-16 h-16 sm:w-24 sm:h-24 bg-linear-to-br from-sky-300 to-sky-400 opacity-10 blur-2xl rounded-full" />
             </div>
 
-            <div className="relative overflow-hidden rounded-xl border border-blue-400/20 bg-blue-400/5 backdrop-blur-sm p-4 sm:p-5 md:p-6 shadow-lg shadow-blue-400/10">
+            <div className="relative overflow-hidden rounded-xl  bg-blue-400/5 backdrop-blur-sm p-4 sm:p-5 md:p-6 shadow-lg shadow-blue-400/10">
               <div className="relative z-10">
                 <div className="text-[10px] sm:text-xs uppercase tracking-wider text-white/40 mb-2 sm:mb-3">PERCLOS Promedio</div>
                 <div className="text-2xl sm:text-3xl tabular-nums text-white/90">{historicalData.avgPerclos}%</div>
@@ -185,7 +230,7 @@ export function HistoricalRecordsTab() {
               <div className="absolute -bottom-4 -right-4 w-16 h-16 sm:w-24 sm:h-24 bg-linear-to-br from-blue-400 to-blue-500 opacity-10 blur-2xl rounded-full" />
             </div>
 
-            <div className="relative overflow-hidden rounded-xl border border-indigo-500/20 bg-indigo-500/5 backdrop-blur-sm p-4 sm:p-5 md:p-6 shadow-lg shadow-indigo-500/10">
+            <div className="relative overflow-hidden rounded-xl border  bg-indigo-500/5 backdrop-blur-sm p-4 sm:p-5 md:p-6 shadow-lg shadow-indigo-500/10">
               <div className="relative z-10">
                 <div className="text-[10px] sm:text-xs uppercase tracking-wider text-white/40 mb-2 sm:mb-3">Total Parpadeos</div>
                 <div className="text-2xl sm:text-3xl tabular-nums text-white/90">{historicalData.avgBlinks}</div>
@@ -193,7 +238,7 @@ export function HistoricalRecordsTab() {
               <div className="absolute -bottom-4 -right-4 w-16 h-16 sm:w-24 sm:h-24 bg-linear-to-br from-indigo-500 to-indigo-600 opacity-10 blur-2xl rounded-full" />
             </div>
 
-            <div className="relative overflow-hidden rounded-xl border border-blue-700/20 bg-blue-700/5 backdrop-blur-sm p-4 sm:p-5 md:p-6 shadow-lg shadow-blue-700/10">
+            <div className="relative overflow-hidden rounded-xl  bg-blue-700/5 backdrop-blur-sm p-4 sm:p-5 md:p-6 shadow-lg shadow-blue-700/10">
               <div className="relative z-10">
                 <div className="text-[10px] sm:text-xs uppercase tracking-wider text-white/40 mb-2 sm:mb-3">Total Bostezos</div>
                 <div className="text-2xl sm:text-3xl tabular-nums text-white/90">{historicalData.avgYawns}</div>
@@ -240,6 +285,17 @@ export function HistoricalRecordsTab() {
                 </motion.div>
               ))}
             </div>
+          </motion.div>
+
+          {/* Historical Charts */}
+          <motion.div
+            className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-5 md:gap-6"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, delay: 0.5 }}
+          >
+            <PERCLOSChart data={perclosHistory} />
+            <BlinksYawnsChart data={blinksYawnsHistory} />
           </motion.div>
         </div>
       )}
