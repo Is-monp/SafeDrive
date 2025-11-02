@@ -1,11 +1,10 @@
 import { motion } from 'motion/react';
-import { Mail, MapPin, Briefcase } from 'lucide-react';
+import {MapPin, Briefcase } from 'lucide-react';
 
 interface TeamMember {
   name: string;
   role: string;
   description: string;
-  email: string;
   location: string;
   image: string;
 }
@@ -13,19 +12,17 @@ interface TeamMember {
 export function EquipmentTab() {
   const teamMembers: TeamMember[] = [
     {
-      name: 'Jane Doe',
-      role: 'Desarrolladora Full-Stack',
-      description: 'Especializada en desarrollo backend e integración con AWS. Responsable de la arquitectura de datos y conexiones de monitoreo en tiempo real con RDS y EC2.',
-      email: 'jane.doe@safedrive.com',
-      location: 'San Francisco, CA',
-      image: 'https://images.unsplash.com/photo-1581065178047-8ee15951ede6?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxwcm9mZXNzaW9uYWwlMjBwb3J0cmFpdCUyMHdvbWFufGVufDF8fHx8MTc2MTk5MjExNHww&ixlib=rb-4.1.0&q=80&w=1080',
+      name: 'Ali Rada',
+      role: 'Desarrollador Full-Stack',
+      description: 'Especializado en desarrollo backend e integración con AWS. Responsable de la arquitectura de datos y conexiones de monitoreo en tiempo real con RDS y EC2.',
+      location: 'Barranquilla, CO',
+      image: 'Ali-rada.jpeg',
     },
     {
-      name: 'John Doe',
-      role: 'Desarrollador Frontend',
-      description: 'Enfocado en la experiencia de usuario y visualización de datos. Responsable del diseño de interfaz, gráficos interactivos y presentación de métricas de fatiga y somnolencia.',
-      email: 'john.doe@safedrive.com',
-      location: 'New York, NY',
+      name: 'Luciana De La Rosa',
+      role: 'Desarrolladora Frontend',
+      description: 'Enfocada en la experiencia de usuario y visualización de datos. Responsable del diseño de interfaz, gráficos interactivos y presentación de métricas de fatiga y somnolencia.',
+      location: 'Barranquilla, CO',
       image: 'https://images.unsplash.com/photo-1672685667592-0392f458f46f?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxwcm9mZXNzaW9uYWwlMjBwb3J0cmFpdCUyMG1hbnxlbnwxfHx8fDE3NjIwMDIzMjV8MA&ixlib=rb-4.1.0&q=80&w=1080',
     },
   ];
@@ -39,7 +36,7 @@ export function EquipmentTab() {
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.4 }}
       >
-        <h2 className="text-2xl sm:text-3xl text-white/90 mb-2 sm:mb-3">Conoce Nuestro Equipo</h2>
+        <h2 className="font-semibold text-2xl sm:text-3xl text-white/90 mb-2 sm:mb-3">Conoce Nuestro Equipo</h2>
         <p className="text-sm sm:text-base text-white/50">
           Desarrolladores comprometidos con la seguridad vial
         </p>
@@ -67,13 +64,13 @@ export function EquipmentTab() {
                       className="w-full h-full object-cover"
                     />
                   </div>
-                  <div className="absolute -bottom-2 -right-2 w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-linear-to-br from-blue-500 to-indigo-600 flex items-center justify-center shadow-lg">
+                  <div className="absolute -bottom-2 -right-2 w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-blue-500 flex items-center justify-center shadow-lg">
                     <Briefcase className="w-4 h-4 sm:w-5 sm:h-5 text-white" />
                   </div>
                 </div>
 
-                <h3 className="text-lg sm:text-xl text-white/90 mb-1">{member.name}</h3>
-                <p className="text-xs sm:text-sm text-blue-400 mb-3 sm:mb-4">{member.role}</p>
+                <h3 className="font-semibold text-lg sm:text-xl text-white/90 mb-1">{member.name}</h3>
+                <p className="text-xs sm:text-sm text-white/60 mb-3 sm:mb-4">{member.role}</p>
 
                 <p className="text-xs sm:text-sm text-white/60 leading-relaxed mb-4 sm:mb-6">
                   {member.description}
@@ -83,8 +80,6 @@ export function EquipmentTab() {
               {/* Contact Info */}
               <div className="space-y-2 sm:space-y-3 pt-4 sm:pt-6 border-t border-white/10">
                 <div className="flex items-center justify-center gap-2 text-xs sm:text-sm">
-                  <Mail className="h-3 w-3 sm:h-4 sm:w-4 text-white/30 shrink-0" />
-                  <span className="text-white/50 truncate">{member.email}</span>
                 </div>
 
                 <div className="flex items-center justify-center gap-2 text-xs sm:text-sm">
@@ -98,58 +93,7 @@ export function EquipmentTab() {
             </div>
           </motion.div>
         ))}
-      </div>
-
-      {/* System Description */}
-      <motion.div
-        className="rounded-2xl border border-white/10 bg-white/2 backdrop-blur-sm p-5 sm:p-6 md:p-8 shadow-xl max-w-5xl mx-auto"
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.5, delay: 0.3 }}
-      >
-        <h3 className="text-lg sm:text-xl text-white/90 mb-4 sm:mb-6">Descripción del Sistema</h3>
-
-        <div className="space-y-4 sm:space-y-5 text-white/60 leading-relaxed">
-          <motion.div
-            className="flex items-start gap-3 sm:gap-4 group"
-            initial={{ opacity: 0, x: -20 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.4, delay: 0.4 }}
-          >
-            <div className="w-1.5 h-1.5 rounded-full bg-blue-400 mt-1.5 sm:mt-2.5 shrink-0 group-hover:scale-150 transition-transform" />
-            <p className="text-xs sm:text-sm">
-              <span className="text-blue-400">Sistema de Monitoreo SafeDrive</span> utiliza visión artificial avanzada
-              y algoritmos de aprendizaje automático para detectar fatiga y somnolencia del conductor en tiempo real.
-            </p>
-          </motion.div>
-
-          <motion.div
-            className="flex items-start gap-3 sm:gap-4 group"
-            initial={{ opacity: 0, x: -20 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.4, delay: 0.5 }}
-          >
-            <div className="w-1.5 h-1.5 rounded-full bg-indigo-400 mt-1.5 sm:mt-2.5 shrink-0 group-hover:scale-150 transition-transform" />
-            <p className="text-xs sm:text-sm">
-              El sistema analiza puntos de referencia faciales, patrones de cierre de ojos (PERCLOS), frecuencia de parpadeo
-              y detección de bostezos para determinar el estado de alerta del conductor.
-            </p>
-          </motion.div>
-
-          <motion.div
-            className="flex items-start gap-3 sm:gap-4 group"
-            initial={{ opacity: 0, x: -20 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.4, delay: 0.6 }}
-          >
-            <div className="w-1.5 h-1.5 rounded-full bg-blue-400 mt-1.5 sm:mt-2.5 shrink-0 group-hover:scale-150 transition-transform" />
-            <p className="text-xs sm:text-sm">
-              Las alertas en tiempo real se generan cuando se detectan niveles peligrosos de fatiga, ayudando a prevenir
-              accidentes causados por somnolencia del conductor.
-            </p>
-          </motion.div>
-        </div>
-      </motion.div>
+      </div> 
     </div>
   );
 }

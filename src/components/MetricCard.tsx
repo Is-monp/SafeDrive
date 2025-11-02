@@ -49,7 +49,7 @@ export function MetricCard({ title, value, color, subtitle }: MetricCardProps) {
     >
       <div className="relative z-10">
         <div className="text-[10px] sm:text-xs uppercase tracking-wider text-white/40 mb-2 sm:mb-3">{title}</div>
-        <div className={`text-2xl sm:text-3xl tabular-nums ${colors.text}`}>{value}</div>
+        <div className="font-semibold text-2xl sm:text-3xl tabular-nums text-white/90">{value}</div>
         {subtitle && <div className="text-xs text-white/30 mt-1 sm:mt-1.5">{subtitle}</div>}
       </div>
       <div className={`absolute -bottom-4 -right-4 w-16 h-16 sm:w-24 sm:h-24 bg-linear-to-br ${colors.gradient} opacity-10 blur-2xl rounded-full`} />

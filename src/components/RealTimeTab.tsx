@@ -144,30 +144,38 @@ export function RealTimeTab() {
         animate={{ opacity: 1, scale: 1 }}
         transition={{ duration: 0.4 }}
       >
-        <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-4 sm:gap-6 md:gap-8">
+        {/* Header Section */}
+        <div className="mb-4 sm:mb-6">
+          <div className="flex items-center gap-2 mb-1">
+            <Play className="h-4 w-4 sm:h-5 sm:w-5 text-blue-400 shrink-0" />
+            <h2 className="font-semibold text-base sm:text-lg text-white/90">
+              Monitoreo en Tiempo Real
+            </h2>
+          </div>
+          <p className="text-white/40 text-sm sm:text-base px-2">
+            Sistema de detección de fatiga y somnolencia del conductor en vivo.
+          </p>
+        </div>
+
+        {/* Controls Row */}
+        <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-4 sm:gap-6">
           {/* Connection Status */}
-          <div className="flex flex-col sm:flex-row items-start sm:items-center gap-3 sm:gap-4 min-w-0">
-            <div className="flex items-center gap-2 shrink-0">
-              <div className={`w-2 h-2 rounded-full ${isConnected ? 'bg-blue-400' : 'bg-rose-400'} animate-pulse`} />
-              <span className="text-xs sm:text-sm text-white/60 whitespace-nowrap">Estado</span>
-            </div>
-            <div className={`flex items-center gap-2 px-3 sm:px-4 py-2 rounded-lg border ${
-              isConnected
-                ? 'bg-blue-500/10 border-blue-500/20 text-blue-400'
-                : 'bg-rose-500/10 border-rose-500/20 text-rose-400'
-            }`}>
-              {isConnected ? (
-                <>
-                  <Wifi className="w-4 h-4 shrink-0" />
-                  <span className="text-xs sm:text-sm whitespace-nowrap">Conectado</span>
-                </>
-              ) : (
-                <>
-                  <WifiOff className="w-4 h-4 shrink-0" />
-                  <span className="text-xs sm:text-sm whitespace-nowrap">Desconectado</span>
-                </>
-              )}
-            </div>
+          <div className={`flex items-center gap-2 px-3 sm:px-4 py-2 rounded-lg border w-fit ${
+            isConnected
+              ? 'bg-blue-500/10 border-blue-500/20 text-blue-400'
+              : 'bg-rose-500/10 border-rose-500/20 text-rose-400'
+          }`}>
+            {isConnected ? (
+              <>
+                <Wifi className="w-4 h-4 sm:h-5 sm:w-5 shrink-0" />
+                <span className="text-xs sm:text-sm font-medium whitespace-nowrap">Conectado</span>
+              </>
+            ) : (
+              <>
+                <WifiOff className="w-4 h-4 sm:h-5 sm:w-5 shrink-0" />
+                <span className="text-xs sm:text-sm font-medium whitespace-nowrap">Desconectado</span>
+              </>
+            )}
           </div>
 
           {/* Start/Stop Button */}
@@ -220,7 +228,7 @@ export function RealTimeTab() {
                     <StateIcon className={`h-4 w-4 sm:h-5 sm:w-5 ${stateConfig.textColor}`} />
                   </div>
                 </div>
-                <div className={`text-xl sm:text-2xl ${stateConfig.textColor}`}>
+                <div className={`font-extrabold text-xl sm:text-2xl ${stateConfig.textColor}`}>
                   {stateConfig.label}
                 </div>
               </div>
@@ -273,7 +281,7 @@ export function RealTimeTab() {
           <div className="inline-flex items-center justify-center w-16 h-16 sm:w-20 sm:h-20 rounded-2xl bg-white/2 border border-white/10 mb-4 sm:mb-6 shadow-lg">
             <Play className="h-7 w-7 sm:h-9 sm:w-9 text-white/20" />
           </div>
-          <p className="text-white/40 text-sm sm:text-base md:text-lg px-4">Haz clic en "Iniciar Monitoreo" para comenzar a rastrear las métricas del conductor</p>
+          <p className="text-white/40 text-sm sm:text-base md:text-lg px-4">Click "Start Monitoring" to begin tracking driver metrics</p>
         </motion.div>
       )}
     </div>
