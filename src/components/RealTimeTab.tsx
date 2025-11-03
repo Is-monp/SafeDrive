@@ -100,6 +100,12 @@ export function RealTimeTab() {
 
   // Función para procesar los datos recibidos del WebSocket
   const processWebSocketData = (data: WebSocketMessage) => {
+    // Si new es false, ignorar este mensaje (solo actualiza los nuevos)
+    if (!data.new) {
+      console.log('Mensaje ignorado (new: false):', data);
+      return;
+    }
+
     const newState = mapEstadoToDriverState(data.estado);
     
     setMetrics({
@@ -132,7 +138,7 @@ export function RealTimeTab() {
     });
   };
 
-  // Función para conectar al WebSocket
+  //WebSocket
   const connectWebSocket = () => {
     try {
       const ws = new WebSocket('ws://3.145.30.91:8080/ws/joinRoom');
