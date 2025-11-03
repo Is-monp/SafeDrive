@@ -246,7 +246,6 @@ export function RealTimeTab() {
               title="Parpadeos"
               value={metrics.blinks.toString()}
               color="blue"
-              subtitle=" "
             />
 
             {/* Yawns */}
@@ -254,7 +253,6 @@ export function RealTimeTab() {
               title="Bostezos"
               value={metrics.yawns.toString()}
               color="indigo"
-              subtitle=" "
             />
           </motion.div>
 

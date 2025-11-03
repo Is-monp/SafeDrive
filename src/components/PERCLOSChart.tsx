@@ -8,8 +8,8 @@ export function PERCLOSChart({ data }: PERCLOSChartProps) {
   return (
     <div className="relative overflow-hidden rounded-xl border border-white/10 bg-white/2 backdrop-blur-sm p-6 shadow-xl">
       <div className="mb-6">
-        <h3 className="text-lg text-white/90">PERCLOS en el Tiempo</h3>
-        <p className="text-xs text-white/40 mt-1">Porcentaje de cierre de párpados</p>
+        <h3 className="font-semibold text-lg text-white/90">PERCLOS (Porcentaje de Ciere de ojos)</h3>
+        <p className="text-xs text-white/40 mt-1">Métrica principal de fatiga detectada en tiempo real.</p>
       </div>
       
       <ResponsiveContainer width="100%" height={300}>

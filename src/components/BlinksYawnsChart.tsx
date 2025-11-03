@@ -17,8 +17,8 @@ export function BlinksYawnsChart({ data }: BlinksYawnsChartProps) {
   return (
     <div className="relative overflow-hidden rounded-xl border border-white/10 bg-white/2 backdrop-blur-sm p-6 shadow-xl">
       <div className="mb-6">
-        <h3 className="text-lg text-white/90">Parpadeos y Bostezos en el Tiempo</h3>
-        <p className="text-xs text-white/40 mt-1">Mediciones por minuto</p>
+        <h3 className="font-semibold text-lg text-white/90">Parpadeos y Bostezos</h3>
+        <p className="text-xs text-white/40 mt-1">Métricas complementarias de comportamiento del conductor</p>
       </div>
 
       <ResponsiveContainer width="100%" height={300}>
