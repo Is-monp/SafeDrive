@@ -15,9 +15,19 @@ interface Metrics {
   yawns: number;
 }
 
+interface WebSocketMessage {
+  device_id: string;
+  estado: string;
+  perclos: number;
+  blinks: number;
+  yawns: number;
+  time: string;
+  new: boolean;
+}
+
 export function RealTimeTab() {
   const [isMonitoring, setIsMonitoring] = useState(false);
-  const [isConnected, setIsConnected] = useState(true);
+  const [isConnected, setIsConnected] = useState(false);
   const [metrics, setMetrics] = useState<Metrics>({
     state: 'normal',
     perclos: 0,
@@ -26,7 +36,9 @@ export function RealTimeTab() {
   });
   const [perclosHistory, setPerclosHistory] = useState<{ time: string; value: number }[]>([]);
   const [blinksYawnsHistory, setBlinksYawnsHistory] = useState<{ time: string; blinks: number; yawns: number }[]>([]);
-  const intervalRef = useRef<NodeJS.Timeout | null>(null);
+  
+  const wsRef = useRef<WebSocket | null>(null);
+  const reconnectTimeoutRef = useRef<NodeJS.Timeout | null>(null);
 
   const getStateConfig = (state: DriverState) => {
     switch (state) {
@@ -73,62 +85,156 @@ export function RealTimeTab() {
     }
   };
 
-  const updateMetrics = () => {
-    const newPerclos = Math.random() * 100;
-    const newBlinks = Math.floor(Math.random() * 30);
-    const newYawns = Math.floor(Math.random() * 10);
-    
-    let newState: DriverState = 'normal';
-    if (newPerclos > 80 || newYawns > 7) {
-      newState = 'microsleep';
-    } else if (newPerclos > 60 || newYawns > 5) {
-      newState = 'fatigue';
-    } else if (newPerclos > 40 || newYawns > 3) {
-      newState = 'drowsiness';
+  // Mapear el estado del WebSocket al tipo DriverState
+  const mapEstadoToDriverState = (estado: string): DriverState => {
+    const estadoUpper = estado.toUpperCase();
+    if (estadoUpper.includes('MICROSUEÑO') || estadoUpper.includes('MICROSLEEP')) {
+      return 'microsleep';
+    } else if (estadoUpper.includes('FATIGA') || estadoUpper.includes('FATIGUE')) {
+      return 'fatigue';
+    } else if (estadoUpper.includes('SOMNOLENCIA') || estadoUpper.includes('DROWSINESS')) {
+      return 'drowsiness';
     }
+    return 'normal';
+  };
 
+  // Función para procesar los datos recibidos del WebSocket
+  const processWebSocketData = (data: WebSocketMessage) => {
+    const newState = mapEstadoToDriverState(data.estado);
+    
     setMetrics({
       state: newState,
-      perclos: newPerclos,
-      blinks: newBlinks,
-      yawns: newYawns,
+      perclos: data.perclos || 0,
+      blinks: data.blinks || 0,
+      yawns: data.yawns || 0,
     });
 
-    const now = new Date();
-    const timeStr = now.toLocaleTimeString('en-US', { hour12: false });
+    // Formatear el tiempo
+    let timeStr: string;
+    try {
+      const timestamp = new Date(data.time);
+      timeStr = timestamp.toLocaleTimeString('en-US', { hour12: false });
+    } catch (error) {
+      // Si hay error al parsear la fecha, usar la hora actual
+      timeStr = new Date().toLocaleTimeString('en-US', { hour12: false });
+    }
 
+    // Actualizar historial de PERCLOS
     setPerclosHistory(prev => {
-      const newHistory = [...prev, { time: timeStr, value: newPerclos }];
-      return newHistory.slice(-20);
+      const newHistory = [...prev, { time: timeStr, value: data.perclos || 0 }];
+      return newHistory.slice(-20); // Mantener últimos 20 puntos
     });
 
+    // Actualizar historial de parpadeos y bostezos
     setBlinksYawnsHistory(prev => {
-      const newHistory = [...prev, { time: timeStr, blinks: newBlinks, yawns: newYawns }];
-      return newHistory.slice(-20);
+      const newHistory = [...prev, { time: timeStr, blinks: data.blinks || 0, yawns: data.yawns || 0 }];
+      return newHistory.slice(-20); // Mantener últimos 20 puntos
     });
+  };
+
+  // Función para conectar al WebSocket
+  const connectWebSocket = () => {
+    try {
+      const ws = new WebSocket('ws://3.145.30.91:8080/ws/joinRoom');
+      
+      ws.onopen = () => {
+        console.log('WebSocket conectado');
+        setIsConnected(true);
+      };
+
+      ws.onmessage = (event) => {
+        try {
+          const parsedData = JSON.parse(event.data);
+          console.log('Datos recibidos:', parsedData);
+          
+          // El WebSocket devuelve un array, tomamos el primer elemento
+          let data: WebSocketMessage;
+          
+          if (Array.isArray(parsedData)) {
+            // Si es un array, tomar el primer elemento
+            if (parsedData.length > 0) {
+              data = parsedData[0];
+            } else {
+              console.warn('Array vacío recibido del WebSocket');
+              return;
+            }
+          } else {
+            // Si es un objeto directo
+            data = parsedData;
+          }
+          
+          processWebSocketData(data);
+        } catch (error) {
+          console.error('Error al parsear mensaje del WebSocket:', error);
+        }
+      };
+
+      ws.onerror = (error) => {
+        console.error('Error en WebSocket:', error);
+        setIsConnected(false);
+      };
+
+      ws.onclose = () => {
+        console.log('WebSocket desconectado');
+        setIsConnected(false);
+        
+        // Intentar reconectar después de 3 segundos si el monitoreo está activo
+        if (isMonitoring) {
+          reconnectTimeoutRef.current = setTimeout(() => {
+            console.log('Intentando reconectar...');
+            connectWebSocket();
+          }, 3000);
+        }
+      };
+
+      wsRef.current = ws;
+    } catch (error) {
+      console.error('Error al crear WebSocket:', error);
+      setIsConnected(false);
+    }
+  };
+
+  // Función para desconectar el WebSocket
+  const disconnectWebSocket = () => {
+    if (reconnectTimeoutRef.current) {
+      clearTimeout(reconnectTimeoutRef.current);
+      reconnectTimeoutRef.current = null;
+    }
+    
+    if (wsRef.current) {
+      wsRef.current.close();
+      wsRef.current = null;
+    }
+    
+    setIsConnected(false);
   };
 
   const startMonitoring = () => {
     setIsMonitoring(true);
-    updateMetrics();
-    intervalRef.current = setInterval(updateMetrics, 2000);
+    connectWebSocket();
   };
 
   const stopMonitoring = () => {
     setIsMonitoring(false);
-    if (intervalRef.current) {
-      clearInterval(intervalRef.current);
-      intervalRef.current = null;
-    }
+    disconnectWebSocket();
+    
+    // Limpiar historiales
     setPerclosHistory([]);
     setBlinksYawnsHistory([]);
+    
+    // Resetear métricas
+    setMetrics({
+      state: 'normal',
+      perclos: 0,
+      blinks: 0,
+      yawns: 0,
+    });
   };
 
+  // Cleanup al desmontar el componente
   useEffect(() => {
     return () => {
-      if (intervalRef.current) {
-        clearInterval(intervalRef.current);
-      }
+      disconnectWebSocket();
     };
   }, []);
 
@@ -182,14 +288,13 @@ export function RealTimeTab() {
           <Button
             onClick={isMonitoring ? stopMonitoring : startMonitoring}
             size="2"
-            disabled={!isConnected}
             className={`${
               isMonitoring
                 ? 'bg-linear-to-r from-rose-500 to-red-600 hover:from-rose-600 hover:to-red-700'
                 : 'bg-linear-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700'
             } shadow-xl ${
               isMonitoring ? 'shadow-rose-500/20' : 'shadow-blue-500/30'
-            } border-0 px-4 sm:px-6 md:px-10 py-3 sm:py-4 md:py-6 rounded-lg transition-all hover:scale-105 active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100 w-full sm:w-auto shrink-0 text-sm sm:text-base`}
+            } border-0 px-4 sm:px-6 md:px-10 py-3 sm:py-4 md:py-6 rounded-lg transition-all hover:scale-105 active:scale-95 w-full sm:w-auto shrink-0 text-sm sm:text-base`}
           >
             {isMonitoring ? (
               <>
@@ -279,7 +384,7 @@ export function RealTimeTab() {
           <div className="inline-flex items-center justify-center w-16 h-16 sm:w-20 sm:h-20 rounded-2xl bg-white/2 border border-white/10 mb-4 sm:mb-6 shadow-lg">
             <Play className="h-7 w-7 sm:h-9 sm:w-9 text-white/20" />
           </div>
-          <p className="text-white/40 text-sm sm:text-base md:text-lg px-4">Click "Start Monitoring" to begin tracking driver metrics</p>
+          <p className="text-white/40 text-sm sm:text-base md:text-lg px-4">Haz clic en "Iniciar Monitoreo" para comenzar a rastrear las métricas del conductor</p>
         </motion.div>
       )}
     </div>
