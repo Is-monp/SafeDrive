@@ -141,7 +141,7 @@ export function RealTimeTab() {
   //WebSocket
   const connectWebSocket = () => {
     try {
-      const ws = new WebSocket('ws://3.145.30.91:8080/ws/joinRoom');
+      const ws = new WebSocket('wss://3.145.30.91:8080/ws/joinRoom');
       
       ws.onopen = () => {
         console.log('WebSocket conectado');
