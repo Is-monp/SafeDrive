@@ -16,14 +16,14 @@ export function EquipmentTab() {
       role: 'Desarrollador Full-Stack',
       description: 'Especializado en desarrollo backend e integración con AWS. Responsable de la arquitectura de datos y conexiones de monitoreo en tiempo real con RDS y EC2.',
       location: 'Barranquilla, CO',
-      image: 'Ali-rada.jpeg',
+      image: 'Ali.png',
     },
     {
       name: 'Luciana De La Rosa',
       role: 'Desarrolladora Frontend',
       description: 'Enfocada en la experiencia de usuario y visualización de datos. Responsable del diseño de interfaz, gráficos interactivos y presentación de métricas de fatiga y somnolencia.',
       location: 'Barranquilla, CO',
-      image: 'https://images.unsplash.com/photo-1672685667592-0392f458f46f?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxwcm9mZXNzaW9uYWwlMjBwb3J0cmFpdCUyMG1hbnxlbnwxfHx8fDE3NjIwMDIzMjV8MA&ixlib=rb-4.1.0&q=80&w=1080',
+      image: 'Luciana.JPG',
     },
   ];
 
