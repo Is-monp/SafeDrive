@@ -104,7 +104,7 @@ export function HistoricalRecordsTab() {
       console.log('Fecha fin (ISO):', endDateISO);
 
       // Fetch data from API with POST method and date range in body
-      const response = await fetch('https://3.145.30.91:8080/history/alerts', {
+      const response = await fetch('https://safedrive.ddns.net:8080/history/alerts', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
