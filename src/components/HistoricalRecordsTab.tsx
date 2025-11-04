@@ -71,8 +71,8 @@ export function HistoricalRecordsTab() {
 
   // Función para convertir el formato datetime-local a ISO 8601
   const convertToISO = (datetimeLocal: string): string => {
-  const date = new Date(datetimeLocal);
-  return date.toISOString(); 
+    // Devuelve el datetime con zona horaria Colombia (-05:00)
+    return `${datetimeLocal}:00-05:00`;
   };
 
   const handleFetchData = async () => {

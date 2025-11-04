@@ -119,7 +119,7 @@ export function RealTimeTab() {
     let timeStr: string;
     try {
       const timestamp = new Date(data.time);
-      timeStr = timestamp.toLocaleTimeString('en-US', { hour12: false });
+      timeStr = timestamp.toISOString().substring(11, 19);
     } catch (error) {
       // Si hay error al parsear la fecha, usar la hora actual
       timeStr = new Date().toLocaleTimeString('en-US', { hour12: false });
