@@ -133,11 +133,13 @@ export function HistoricalRecordsTab() {
 
       data.alerts.forEach((alert) => {
         const alertDate = new Date(alert.time);
+        // Usar métodos UTC para mostrar la hora en UTC, no en zona horaria local
         const timeStr = alertDate.toLocaleString('es-ES', {
           month: 'short',
           day: 'numeric',
           hour: '2-digit',
-          minute: '2-digit'
+          minute: '2-digit',
+          timeZone: 'UTC' // IMPORTANTE: Esto fuerza que se muestre la hora UTC
         });
 
         perclosData.push({
@@ -218,12 +220,12 @@ export function HistoricalRecordsTab() {
           </h2>
         </div>
         <p className="text-white/40 text-sm sm:text-base md:text-x px-2">
-          Consulta datos almacenados en AWS RDS por rango de fechas.
+          Consulta datos almacenados en AWS RDS por rango de fechas (UTC).
         </p>
       </div>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6">
           <div className="space-y-2">
-            <Label htmlFor="startDate" className="text-xs uppercase tracking-wider text-white/40">Fecha Inicio</Label>
+            <Label htmlFor="startDate" className="text-xs uppercase tracking-wider text-white/40">Fecha Inicio (UTC)</Label>
             <Input
               id="startDate"
               type="datetime-local"
@@ -235,7 +237,7 @@ export function HistoricalRecordsTab() {
           </div>
 
           <div className="space-y-2">
-            <Label htmlFor="endDate" className="text-xs uppercase tracking-wider text-white/40">Fecha Fin</Label>
+            <Label htmlFor="endDate" className="text-xs uppercase tracking-wider text-white/40">Fecha Fin (UTC)</Label>
             <Input
               id="endDate"
               type="datetime-local"
