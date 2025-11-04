@@ -350,6 +350,7 @@ export function RealTimeTab() {
               title="PERCLOS"
               value={`${metrics.perclos.toFixed(1)}%`}
               color="cyan"
+              subtitle='Por minuto'
             />
 
             {/* Blinks */}
@@ -357,6 +358,7 @@ export function RealTimeTab() {
               title="Parpadeos"
               value={metrics.blinks.toString()}
               color="blue"
+              subtitle='Por minuto'
             />
 
             {/* Yawns */}
@@ -364,6 +366,7 @@ export function RealTimeTab() {
               title="Bostezos"
               value={metrics.yawns.toString()}
               color="indigo"
+              subtitle='Por minuto'
             />
           </motion.div>
 
