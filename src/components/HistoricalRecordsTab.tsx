@@ -220,12 +220,12 @@ export function HistoricalRecordsTab() {
           </h2>
         </div>
         <p className="text-white/40 text-sm sm:text-base md:text-x px-2">
-          Consulta datos almacenados en AWS RDS por rango de fechas (UTC).
+          Consulta datos almacenados en AWS RDS por rango de fechas.
         </p>
       </div>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6">
           <div className="space-y-2">
-            <Label htmlFor="startDate" className="text-xs uppercase tracking-wider text-white/40">Fecha Inicio (UTC)</Label>
+            <Label htmlFor="startDate" className="text-xs uppercase tracking-wider text-white/40">Fecha Inicio</Label>
             <Input
               id="startDate"
               type="datetime-local"
@@ -237,7 +237,7 @@ export function HistoricalRecordsTab() {
           </div>
 
           <div className="space-y-2">
-            <Label htmlFor="endDate" className="text-xs uppercase tracking-wider text-white/40">Fecha Fin (UTC)</Label>
+            <Label htmlFor="endDate" className="text-xs uppercase tracking-wider text-white/40">Fecha Fin</Label>
             <Input
               id="endDate"
               type="datetime-local"
