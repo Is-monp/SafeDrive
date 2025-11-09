@@ -128,13 +128,13 @@ export function RealTimeTab() {
     // Actualizar historial de PERCLOS
     setPerclosHistory(prev => {
       const newHistory = [...prev, { time: timeStr, value: data.perclos || 0 }];
-      return newHistory.slice(-20); // Mantener últimos 20 puntos
+      return newHistory.slice(-4); 
     });
 
     // Actualizar historial de parpadeos y bostezos
     setBlinksYawnsHistory(prev => {
       const newHistory = [...prev, { time: timeStr, blinks: data.blinks || 0, yawns: data.yawns || 0 }];
-      return newHistory.slice(-20); // Mantener últimos 20 puntos
+      return newHistory.slice(-4); 
     });
   };
 

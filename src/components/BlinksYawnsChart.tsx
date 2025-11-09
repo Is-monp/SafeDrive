@@ -7,6 +7,7 @@ import {
   Tooltip,
   Legend,
   ResponsiveContainer,
+  Label,
 } from 'recharts';
 
 interface BlinksYawnsChartProps {
@@ -18,7 +19,7 @@ export function BlinksYawnsChart({ data }: BlinksYawnsChartProps) {
     <div className="relative overflow-hidden rounded-xl border border-white/10 bg-white/2 backdrop-blur-sm p-6 shadow-xl">
       <div className="mb-6">
         <h3 className="font-semibold text-lg text-white/90">Parpadeos y Bostezos</h3>
-        <p className="text-xs text-white/40 mt-1">Métricas complementarias de comportamiento del conductor</p>
+        <p className="text-xs text-white/40 mt-1">Métricas complementarias de comportamiento del conductor detectadas por minuto.</p>
       </div>
 
       <ResponsiveContainer width="100%" height={300}>
@@ -35,13 +36,28 @@ export function BlinksYawnsChart({ data }: BlinksYawnsChartProps) {
             tick={{ fill: '#ffffff40', fontSize: 11 }}
             tickLine={false}
             axisLine={{ stroke: '#ffffff10' }}
-          />
+          >
+            <Label
+              value="Tiempo"
+              position="insideBottom"
+              offset={0}
+              style={{ fill: '#ffffff60', fontSize: 12 }}
+            />
+          </XAxis>
           <YAxis
             stroke="#ffffff"
             tick={{ fill: '#ffffff40', fontSize: 11 }}
             tickLine={false}
             axisLine={{ stroke: '#ffffff10' }}
-          />
+          >
+            <Label
+              value="Cantidad"
+              angle={-90}
+              position="insideLeft"
+              offset={10}
+              style={{ fill: '#ffffff60', fontSize: 12, textAnchor: 'middle' }}
+            />
+          </YAxis>
           <Tooltip
             contentStyle={{
               backgroundColor: '#0B0F19',
@@ -55,11 +71,13 @@ export function BlinksYawnsChart({ data }: BlinksYawnsChartProps) {
           <Legend
             wrapperStyle={{ color: '#ffffff60', fontSize: '12px' }}
             iconType="circle"
+            verticalAlign="top" 
+            height={36}
           />
           <Line
             type="monotone"
             dataKey="blinks"
-            stroke="#60a5fa" // blue-400
+            stroke="#60a5fa" 
             strokeWidth={2.5}
             dot={false}
             activeDot={{ r: 5, fill: '#60a5fa', strokeWidth: 0 }}
@@ -68,7 +86,7 @@ export function BlinksYawnsChart({ data }: BlinksYawnsChartProps) {
           <Line
             type="monotone"
             dataKey="yawns"
-            stroke="#22d3ee" // cyan-400 from PERCLOS chart
+            stroke="#22d3ee" 
             strokeWidth={2.5}
             dot={false}
             activeDot={{ r: 5, fill: '#22d3ee', strokeWidth: 0 }}
